@@ -4,6 +4,7 @@ Teriaq is a healthcare mobile app that connects patients, doctors, and nurses wi
 ## Table of Content
 - [Tech Stack](#tech-stack)
 - [Server Setup](#server-setup)
+- [API Documentation](#api-documentation)
 
 ## Tech Stack
 - [Node.js](https://nodejs.org/en/)
@@ -36,3 +37,22 @@ $ npm start
 ```
 
 #### 6. Now check http://localhost:8080/
+
+## API Documentation
+| Method | Endpoint | description |
+| - | - | - |
+| GET | /api/patients | Get all patients |
+| GET | /api/patients/\<id> | Get a patient by its id
+| POST | /api/patients | Create a new patient |
+| PATCH | /api/patients/\<id> | Update a patient by its id |
+| DELETE | /api/patients/\<id> | Delete a patient by its id |
+| GET | /api/doctors | Get all doctors |
+| GET | /api/doctors/\<id> | Get a doctor by its id
+| POST | /api/doctorss | Create a new doctor |
+| PATCH | /api/doctorss/\<id> | Update a doctor by its id |
+| DELETE | /api/doctorss/\<id> | Delete a doctor by its id |
+| GET | /api/nurses | Get all nurses |
+| GET | /api/nurses/\<id> | Get a nurse by its id
+| POST | /api/nurses | Create a new nurse |
+| PATCH | /api/nurses/\<id> | Update a nurse by its id |
+| DELETE | /api/nurses/\<id> | Delete a nurse by its id |
