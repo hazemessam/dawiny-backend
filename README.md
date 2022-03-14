@@ -39,7 +39,7 @@ $ npm start
 #### 6. Now check http://localhost:8080/
 
 ## API Documentation
-| Method | Endpoint | description |
+| Method | Endpoint | Description |
 | - | - | - |
 | GET | /api/patients | Get all patients |
 | GET | /api/patients/\<id> | Get a patient by its id
