@@ -14,6 +14,7 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(logger);
+app.use(express.json());
 
 app.use('/api/doctors', doctorRouter);
 app.use('/api/patients', patientRouter);
