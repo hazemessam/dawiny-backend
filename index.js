@@ -16,7 +16,7 @@ const runServer = async () => {
     try {
         await mongoose.connect(DB_URI);
         console.log(`Connected to db ${mongoose.connection.db.databaseName}`);
-        app.listen(PORT, () => console.log(`Server is listening on port ${PORT}...`));
+        app.listen(PORT, '0.0.0.0', () => console.log(`Server is listening on port ${PORT}...`));
     } catch (error) {
         console.error(error);
         console.error('Can not connect to the db!');
