@@ -1,5 +1,6 @@
 // Third party modules
 const express = require('express');
+const cors = require('cors');
 
 // Application modules
 const logger = require('./middlewares/logger');
@@ -11,6 +12,7 @@ const nurseRouter = require('./routers/nurse');
 const app = express();
 
 // Middlewares
+app.use(cors());
 app.use(logger);
 
 app.use('/api/doctors', doctorRouter);
