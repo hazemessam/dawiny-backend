@@ -4,7 +4,7 @@ Teriaq is a healthcare mobile app that connects patients, doctors, and nurses wi
 ## Table of Content
 - [Tech Stack](#tech-stack)
 - [Server Setup](#server-setup)
-- [API Documentation](#api-documentation)
+- [API Endpoints](#api-endpoints)
 
 ## Tech Stack
 - [Node.js](https://nodejs.org/en/)
@@ -38,7 +38,7 @@ $ npm start
 
 #### 6. Now check http://localhost:8080/
 
-## API Documentation
+## API Endpoints
 | Method | Endpoint | Description |
 | - | - | - |
 | GET | /api/patients | Get all patients |
