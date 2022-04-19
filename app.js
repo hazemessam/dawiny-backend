@@ -17,7 +17,6 @@ app.use(cors());
 app.use(logger);
 app.use(express.json());
 
-
 // Handle routes
 app.get('/', (req, res) => res.json({msg: 'Server is running...'}));
 app.use('/api/doctors', doctorRouter);
