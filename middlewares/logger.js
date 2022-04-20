@@ -1,4 +1,7 @@
 const logger = (req, res, next) => {
+    if (process.env.NODE_ENV == 'test')
+        return next();
+
     const options = {
         timeZone: 'Africa/Cairo',
         year: 'numeric',

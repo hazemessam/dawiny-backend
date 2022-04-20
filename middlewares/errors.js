@@ -2,7 +2,8 @@ const { CustomError } = require("../utils/errors");
 
 
 const errorHandler = (err, req, res, next) => {    
-    console.log(err);
+    if (process.env.NODE_ENV != 'test')
+        console.log(err);
     if (err instanceof CustomError)
         return res.status(err.code).json({error: err.message});
     return res.status(500).json({error: 'Internal server error'});
