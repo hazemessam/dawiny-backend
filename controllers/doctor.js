@@ -3,7 +3,8 @@ const {asyncWrapper, CustomError} = require('../utils/errors');
 
 
 const getAllDoctors = asyncWrapper(async (req, res) => {
-    
+    const doctors = await Doctor.find();
+    return res.json(doctors);
 });
 
 
