@@ -4,18 +4,22 @@ const mongoose = require('mongoose');
 const doctorSchema = mongoose.Schema({
     email: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     firstName: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     lastName: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     gender: {
         type: String,
@@ -43,7 +47,7 @@ const doctorSchema = mongoose.Schema({
     },
     rate: {
         type: Number,
-        default: 0,
+        default: 1,
         min: 1,
         max: 5
     },
