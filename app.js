@@ -5,9 +5,9 @@ const cors = require('cors');
 // Application modules
 const logger = require('./middlewares/logger');
 const { errorHandler, notFoundHandler } = require('./middlewares/errors');
-const doctorRouter = require('./routers/doctor');
-const patientRouter = require('./routers/patient');
-const nurseRouter = require('./routers/nurse');
+const doctorRouter = require('./routes/doctor');
+const patientRouter = require('./routes/patient');
+const nurseRouter = require('./routes/nurse');
 
 
 const app = express();
