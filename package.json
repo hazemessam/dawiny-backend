@@ -1,5 +1,5 @@
 {
-  "name": "teriaq",
+  "name": "dawiny",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hazemessam/teriaq.git"
+    "url": "git+https://github.com/hazemessam/dawiny-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hazemessam/teriaq/issues"
+    "url": "https://github.com/hazemessam/dawiny-backend/issues"
   },
-  "homepage": "https://github.com/hazemessam/teriaq#readme",
+  "homepage": "https://github.com/hazemessam/dawiny-backend#readme",
   "devDependencies": {
     "jest": "^27.5.1",
     "nodemon": "^2.0.15",

@@ -1,5 +1,5 @@
-# Teriaq
-Teriaq is a healthcare mobile app that connects patients, doctors, and nurses with each other.
+# Dawiny Backend
+Dawiny is a healthcare mobile app that connects patients, doctors, and nurses with each other.
 
 ## Table of Content
 - [Tech Stack](#tech-stack)
@@ -16,12 +16,12 @@ Teriaq is a healthcare mobile app that connects patients, doctors, and nurses wi
 ## Server Setup
 #### 1. Clone the repo
 ```bash
-$ git clone https://github.com/hazemessam/teriaq.git
+$ git clone https://github.com/hazemessam/dawiny-backend.git
 ```
 
 #### 2. Move to the project directory
 ```bash
-$ cd teriaq/
+$ cd dawiny-backend/
 ```
 
 #### 3. Install the dependances
