@@ -19,8 +19,6 @@ const getDoctorById = asyncWrapper(async (req, res) => {
 
 
 const addDoctor = asyncWrapper(async (req, res) => {
-    if (!req.body) throw new CustomError('Missing requird data', 400);
-
     const requiredFields = ['email', 'password', 'firstName', 'lastName'];
     for (field of requiredFields)
         if (!req.body[field])
