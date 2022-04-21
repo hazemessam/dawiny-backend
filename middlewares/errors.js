@@ -5,8 +5,8 @@ const errorHandler = (err, req, res, next) => {
     if (process.env.NODE_ENV != 'test')
         console.log(err);
     if (err instanceof CustomError)
-        return res.status(err.code).json({error: err.message});
-    return res.status(500).json({error: 'Internal server error'});
+        return res.status(err.code).json({msg: err.message});
+    return res.status(500).json({msg: 'Internal server error', err});
 }
 
 
