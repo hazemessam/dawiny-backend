@@ -1,5 +1,5 @@
 const Doctor = require('../models/doctor');
-const {asyncWrapper, CustomError} = require('../utils/errors');
+const { asyncWrapper, CustomError } = require('../utils/errors');
 
 
 const getAllDoctors = asyncWrapper(async (req, res) => {
@@ -8,10 +8,19 @@ const getAllDoctors = asyncWrapper(async (req, res) => {
 });
 
 
+const getDoctorById = asyncWrapper(async (req, res) => {
+    const doctor = await Doctor.findById(req.params.id);
+    if (!doctor)
+        throw new CustomError('Not found', 404);
+
+    doctor.password = undefined;
+    return res.json(doctor);
+});
+
+
 const addDoctor = asyncWrapper(async (req, res) => {
-    if (!req.body)
-        throw new CustomError('Missing requird data', 400);
-        
+    if (!req.body) throw new CustomError('Missing requird data', 400);
+
     const requiredFields = ['email', 'password', 'firstName', 'lastName'];
     for (field of requiredFields)
         if (!req.body[field])
@@ -20,7 +29,7 @@ const addDoctor = asyncWrapper(async (req, res) => {
     let doctor = await Doctor.findOne({email: req.body.email});
     if (doctor)
         throw new CustomError(`${req.body.email} is already exist`, 422);
-    
+
     doctor = await Doctor.create(req.body);
     return res.status(201).json(doctor);
 });
@@ -28,5 +37,6 @@ const addDoctor = asyncWrapper(async (req, res) => {
 
 module.exports = {
     getAllDoctors,
+    getDoctorById,
     addDoctor
 }
