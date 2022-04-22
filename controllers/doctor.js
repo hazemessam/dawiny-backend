@@ -4,6 +4,9 @@ const { asyncWrapper, CustomError } = require('../utils/errors');
 
 const getAllDoctors = asyncWrapper(async (req, res) => {
     const doctors = await Doctor.find();
+    for (let doctor of doctors)
+        doctor.password = undefined;
+
     return res.json(doctors);
 });
 
@@ -33,8 +36,18 @@ const addDoctor = asyncWrapper(async (req, res) => {
 });
 
 
+const deleteDoctorById = asyncWrapper(async (req, res) => {
+    const doctor = await Doctor.findByIdAndDelete(req.params.id);
+    if (!doctor)
+        throw new CustomError('Not found', 404);
+
+    res.json({_id: doctor._id});
+});
+
+
 module.exports = {
     getAllDoctors,
     getDoctorById,
-    addDoctor
+    addDoctor,
+    deleteDoctorById
 }

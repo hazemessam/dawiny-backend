@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Application modules
-const { getAllDoctors, getDoctorById, addDoctor } = require('../controllers/doctor');
+const { getAllDoctors, getDoctorById, addDoctor, deleteDoctorById } = require('../controllers/doctor');
 
 
 const router = express.Router();
@@ -12,6 +12,7 @@ router.route('/')
     .post(addDoctor);
 
 router.route('/:id')
-    .get(getDoctorById);
+    .get(getDoctorById)
+    .delete(deleteDoctorById);
 
 module.exports = router;
