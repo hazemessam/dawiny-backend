@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 
 // Application modules
 const app = require('../../app');
-const req = require('express/lib/request');
 
 
 dotenv.config();
@@ -92,7 +91,7 @@ describe('GET /api/doctors/:id', () => {
         expect(res.body).not.toHaveProperty('password');
     });
     
-    it('should respond with 404 status code if the user does not exist', async () => {
+    it('should respond with 404 status code if the doctor does not exist', async () => {
         const doctorId = '6260fb7e39818e48bb725388';
         res = await request.get(`/api/doctors/${doctorId}`);
         expect(res.status).toBe(404);
