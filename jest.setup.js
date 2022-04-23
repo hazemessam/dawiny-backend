@@ -1,14 +1,25 @@
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 
 
-dotenv.config()
+const mongoServer = new MongoMemoryServer();
+
+const connect = async () => {
+    await mongoServer.start();
+    await mongoose.connect(mongoServer.getUri());
+}
+
+const clear = async () => {
+    const collections = mongoose.connection.collections;
+    for (let key in collections) await collections[key].deleteMany();
+}
+
+const close = async () => {
+    await mongoose.disconnect();
+    await mongoServer.stop();
+}
 
 
-beforeAll(async () => await mongoose.connect(process.env.TEST_DB_URI));
-
-afterEach(async () => {
-    await mongoose.connection.db.collection('doctors').deleteMany();
-});
-
-afterAll(async () => await mongoose.disconnect());
+beforeAll(connect);
+afterEach(clear);
+afterAll(close);
