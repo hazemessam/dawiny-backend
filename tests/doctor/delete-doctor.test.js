@@ -26,7 +26,7 @@ describe('DELETE /api/doctors/:id', () => {
         let res = await request.post('/api/doctors').send(data);
         const doctorId = res.body._id;
         res = await request.delete(`/api/doctors/${doctorId}`);
-        expect(res.headers['content-type']).toMatch(/json/);
+        expect(res.headers['content-type']).toMatch('json');
     });
     
     test('should return doctorId', async () => {

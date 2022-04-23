@@ -22,7 +22,7 @@ describe('POST /api/doctors', () => {
     
     test('should return json response', async () => {
         const res = await request.post('/api/doctors').send(data);
-        expect(res.headers['content-type']).toMatch(/json/);
+        expect(res.headers['content-type']).toMatch('json');
     });
     
     test('should return doctor id', async () => {

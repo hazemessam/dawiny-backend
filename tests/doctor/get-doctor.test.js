@@ -22,7 +22,7 @@ describe('GET /api/doctors', () => {
     
     test('should return json response', async () => {
         const res = await request.get('/api/doctors');
-        expect(res.headers['content-type']).toMatch(/json/);
+        expect(res.headers['content-type']).toMatch('json');
     });
     
     test('should return array', async () => {
@@ -59,7 +59,7 @@ describe('GET /api/doctors/:id', () => {
         let res = await request.post('/api/doctors').send(data);
         const doctorId = res.body._id;
         res = await request.get(`/api/doctors/${doctorId}`);
-        expect(res.headers['content-type']).toMatch(/json/);
+        expect(res.headers['content-type']).toMatch('json');
     });
     
     test('should return doctor with email field', async () => {

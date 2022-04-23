@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Application modules
-const { getAllDoctors, getDoctorById, addDoctor, deleteDoctorById } = require('../controllers/doctor');
+const { getAllDoctors, getDoctorById, addDoctor, updateDoctorById, deleteDoctorById } = require('../controllers/doctor');
 
 
 const router = express.Router();
@@ -13,6 +13,7 @@ router.route('/')
 
 router.route('/:id')
     .get(getDoctorById)
+    .patch(updateDoctorById)
     .delete(deleteDoctorById);
 
 module.exports = router;

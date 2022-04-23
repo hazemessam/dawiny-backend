@@ -6,7 +6,6 @@ const getAllDoctors = asyncWrapper(async (req, res) => {
     const doctors = await Doctor.find();
     for (let doctor of doctors)
         doctor.password = undefined;
-
     return res.json(doctors);
 });
 
@@ -27,6 +26,17 @@ const addDoctor = asyncWrapper(async (req, res) => {
 });
 
 
+const updateDoctorById = asyncWrapper(async (req, res) => {
+    let doctor = await Doctor.findById(req.params.id);
+    if (!doctor) throw new CustomError('Not found', 404);
+    if (await Doctor.findOne({email: req.body.email}))
+        throw new CustomError(`${req.body.email} is already exist`, 422);
+    const updateOptions =  { returnOriginal: false, runValidators: true };
+    doctor = await Doctor.findByIdAndUpdate(req.params.id, req.body, updateOptions);
+    return res.json(doctor);
+});
+
+
 const deleteDoctorById = asyncWrapper(async (req, res) => {
     const doctor = await Doctor.findByIdAndDelete(req.params.id);
     if (!doctor) throw new CustomError('Not found', 404);
@@ -38,5 +48,6 @@ module.exports = {
     getAllDoctors,
     getDoctorById,
     addDoctor,
+    updateDoctorById,
     deleteDoctorById
 }
