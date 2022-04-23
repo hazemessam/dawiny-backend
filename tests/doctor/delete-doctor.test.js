@@ -1,22 +1,13 @@
 // Third party modules
 const supertest = require('supertest');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 
 // Application modules
 const app = require('../../app');
 
 
-dotenv.config();
 const request = supertest(app);
 
 describe('DELETE /api/doctors/:id', () => {
-    beforeEach(async () => await mongoose.connect(process.env.TEST_DB_URI));
-    afterEach(async () => {
-        await mongoose.connection.db.collection('doctors').deleteMany();
-        await mongoose.disconnect();
-    });
-
     const data = {
         email: 'test@dawiny.com',
         password: '1234',
