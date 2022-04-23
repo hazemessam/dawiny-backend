@@ -15,22 +15,22 @@ describe('POST /api/doctors', () => {
         lastName: 'Essam'
     }
 
-    it('should respond with 201 status code', async () => {
+    test('should respond with 201 status code', async () => {
         const res = await request.post('/api/doctors').send(data);
         expect(res.status).toBe(201);
     });
     
-    it('should return json response', async () => {
+    test('should return json response', async () => {
         const res = await request.post('/api/doctors').send(data);
         expect(res.headers['content-type']).toMatch(/json/);
     });
     
-    it('should return doctor id', async () => {
+    test('should return doctor id', async () => {
         const res = await request.post('/api/doctors').send(data);
         expect(res.body._id).toBeDefined();
     });
 
-    it('should respond with 400 status code when sending incompleted data', async () => {
+    test('should respond with 400 status code when sending incompleted data', async () => {
         const incompletedData = [
             {...data, email: undefined},
             {...data, password: undefined},
@@ -43,7 +43,7 @@ describe('POST /api/doctors', () => {
         }
     });
     
-    it('should respond with 422 status code when email is already exist', async () => {
+    test('should respond with 422 status code when email is already exist', async () => {
         await request.post('/api/doctors').send(data);
         const res = await request.post('/api/doctors').send(data);
         expect(res.status).toBe(422);
