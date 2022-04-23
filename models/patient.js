@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const patientSchema = mongoose.Schema({
     email: {
         type: String,
-        trim: true
+        trim: true,
+        required: true,
+        unique: true
     },
     password: {
         type: String
