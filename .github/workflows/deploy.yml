@@ -29,9 +29,9 @@ jobs:
       - run: npm test
 
   deploy:
-    needs: test
-
     runs-on: ubuntu-latest
+    
+    needs: test
 
     steps:
       - name: Checkout Code
