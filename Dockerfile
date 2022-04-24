@@ -2,9 +2,9 @@ FROM node:lts-slim
 
 WORKDIR /app
 
-COPY package-lock.json .
+COPY ["package.json", "package-lock.json*", "./"]
 
-RUN npm ci --only=production
+RUN npm ci
 
 COPY . .
 
