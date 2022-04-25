@@ -10,4 +10,4 @@ RUN pip install -r model.txt
 
 COPY . .
 
-CMD ["gunicorn", "api:app", "-b", "0.0.0.0"]
+CMD ["gunicorn", "api:app"]
