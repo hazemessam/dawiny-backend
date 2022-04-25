@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ml-model
-      url: dawinyml.herokuapp.com
+      url: 'https://dawinyml.herokuapp.com'
     
     steps:
       - name: Checkout Code

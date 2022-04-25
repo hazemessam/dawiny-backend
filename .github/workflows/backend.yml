@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: backend
-      url: dawiny.heroku.com
+      url: 'https://dawiny.herokuapp.com'
 
     steps:
       - name: Checkout Code
