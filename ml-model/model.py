@@ -8,7 +8,7 @@ with open('./data.sav', 'rb') as f:
 lmodel =  joblib.load("./model.sav")
 
 
-def predictDisease(symptoms):
+def predict_disease(symptoms):
     input_data = [0] * len(data_dict["symptom_index"])
 
     for symptom in symptoms:
@@ -21,5 +21,5 @@ def predictDisease(symptoms):
     return nb_prediction
 
 
-# print(predictDisease(['Itching', 'Skin Rash', 'Nodal Skin Eruptions']))
-# print(predictDisease(['Continuous Sneezing', 'Knee Pain', 'Stiff Neck']))
+# print(predict_disease(['Itching', 'Skin Rash', 'Nodal Skin Eruptions']))
+# print(predict_disease(['Continuous Sneezing', 'Knee Pain', 'Stiff Neck']))
