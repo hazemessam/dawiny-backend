@@ -9,15 +9,18 @@ const patientSchema = mongoose.Schema({
         unique: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     firstName: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     lastName: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     gender: {
         type: String,
