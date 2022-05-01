@@ -23,9 +23,11 @@ def index():
 
 
 @app.route('/ml', methods=['POST'])
-def ml():
+def predict():
     try: data: dict = json.loads(request.data)
     except: raise APIException('Can not parse the request body', 400)
+
+    if not isinstance(data, dict): raise APIException('Can not parse the request body', 400)
 
     symptoms: list = data.get('symptoms')  # ["Itching", "Skin Rash", "Nodal Skin Eruptions"]
     if not symptoms: raise APIException('Missing symptoms', 400)
