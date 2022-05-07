@@ -9,15 +9,18 @@ const nurseSchema = mongoose.Schema({
         unique: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     firstName: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     lastName: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     gender: {
         type: String,
@@ -38,7 +41,7 @@ const nurseSchema = mongoose.Schema({
     rate: {
         type: Number,
         default: 0,
-        min: 1,
+        min: 0,
         max: 5
     },
 });
