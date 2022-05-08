@@ -12,6 +12,8 @@ Dawiny is a healthcare mobile app that connects patients, doctors, and nurses wi
 - [Mongoose](https://mongoosejs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Socket.IO](https://socket.io/)
+- [Docker](https://www.docker.com/)
+- [Heroku](https://www.heroku.com/)
 
 ## Server Setup
 #### 1. Clone the repo
