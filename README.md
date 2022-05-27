@@ -50,9 +50,9 @@ $ npm start
 | DELETE | /api/patients/:id | Delete a patient by its id |
 | GET | /api/doctors | Get all doctors |
 | GET | /api/doctors/:id | Get a doctor by its id
-| POST | /api/doctorss | Create a new doctor |
-| PATCH | /api/doctorss/:id | Update a doctor by its id |
-| DELETE | /api/doctorss/:id | Delete a doctor by its id |
+| POST | /api/doctors | Create a new doctor |
+| PATCH | /api/doctors/:id | Update a doctor by its id |
+| DELETE | /api/doctors/:id | Delete a doctor by its id |
 | GET | /api/nurses | Get all nurses |
 | GET | /api/nurses/:id | Get a nurse by its id
 | POST | /api/nurses | Create a new nurse |
