@@ -22,7 +22,7 @@ def index():
     return jsonify({'msg': 'Server is running...'})
 
 
-@app.route('/ml', methods=['POST'])
+@app.route('/api/ml', methods=['POST'])
 def predict():
     try: data: dict = json.loads(request.data)
     except: raise APIException('Can not parse the request body', 400)
