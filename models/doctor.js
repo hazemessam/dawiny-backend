@@ -52,6 +52,11 @@ const doctorSchema = mongoose.Schema({
         min: 0,
         max: 5
     },
+    status: {
+        type: String,
+        trim: true,
+        enum: ["online", "offline"]
+    }
 });
 
 module.exports = mongoose.model('Doctor', doctorSchema);
