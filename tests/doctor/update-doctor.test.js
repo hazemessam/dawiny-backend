@@ -3,59 +3,114 @@ const supertest = require('supertest');
 
 // Application modules
 const app = require('../../app');
+const Doctor = require('../../models/doctor.js');
+const { genAccessToken } = require('../../services/auth/token');
 
 
 const request = supertest(app);
 
-describe('PATCH /api/doctors', () => {
-    const data = {
-        email: 'test@dawiny.com',
-        password: '1234',
-        firstName: 'Hazem',
-        lastName: 'Essam'
-    };
 
-    const updatedData = { email: 'updated@dawiny.com' };
+const data = {
+    email: 'user@dawiny.com',
+    password: '1234',
+    firstName: 'Hazem',
+    lastName: 'Essam'
+}
 
-    test('should respond with 200 status code', async () => { 
-        let res = await request.post('/api/doctors').send(data);
-        const doctorId = res.body._id;
-        res = await request.patch(`/api/doctors/${doctorId}`).send(updatedData);
+
+async function createDoctorandItsToken(doctorData = data) {
+    const doctor = await Doctor.create(doctorData);
+    const payload = { userId: doctor._id, role: 'doctor' };
+    doctor.access =  genAccessToken(payload);
+    return doctor;
+}
+
+
+describe('PATCH /api/doctors/:id', () => {
+    test('should respond with 200 status code', async () => {
+        // Arrange        
+        const doctor = await createDoctorandItsToken();
+
+        // Act
+        const res = await request.patch(`/api/doctors/${doctor._id}`)
+            .set('Authorization', doctor.access)
+            .send({ email: 'updated@dawiny.com' });
+
+        // Assert
         expect(res.status).toBe(200);
     });
 
+
     test('should return json response', async () => {
-        let res = await request.post('/api/doctors').send(data);
-        const doctorId = res.body._id;
-        res = await request.patch(`/api/doctors/${doctorId}`).send(updatedData);
+        // Arrange        
+        const doctor = await createDoctorandItsToken();
+
+        // Act
+        const res = await request.patch(`/api/doctors/${doctor._id}`)
+            .set('Authorization', doctor.access)
+            .send({ email: 'updated@dawiny.com' });
+
+        // Assert
         expect(res.headers['content-type']).toMatch('json');
     });
 
+
     test('should return updated doctor', async () => {
-        let res = await request.post('/api/doctors').send(data);
-        const doctorId = res.body._id;
-        res = await request.patch(`/api/doctors/${doctorId}`).send(updatedData);
-        expect(res.body.email).toEqual(updatedData.email);
+        // Arrange        
+        const doctor = await createDoctorandItsToken();
+
+        // Act
+        const updatedEmail = 'updated@dawiny.com';
+        const res = await request.patch(`/api/doctors/${doctor._id}`)
+            .set('Authorization', doctor.access)
+            .send({ email: updatedEmail });
+
+        // Assert
+        expect(res.body.email).toEqual(updatedEmail);
     });
-    
+
+
     test('should respond with 404 status code if the doctor does not exist', async () => {
-        const doctorId = '6260fb7e39818e48bb725388';
-        res = await request.patch(`/api/doctors/${doctorId}`).send(data);
+        // Arrange
+        const doctor = await createDoctorandItsToken();
+
+        // Act
+        const unExistId = '6260fb7e39818e48bb725388';
+        const res = await request.patch(`/api/doctors/${unExistId}`)
+            .set('Authorization', doctor.access)
+            .send({ email: 'updated@dawiny.com' });
+
+        // Assert
         expect(res.status).toBe(404);
     });
 
+
     test('should respond with 422 status code when updating to existing email', async () => {
-        await request.post('/api/doctors').send(data);
-        let res = await request.post('/api/doctors').send({ ...data, email: 'updated@dawiny.com' });
-        const doctorId = res.body._id;
-        res = await request.patch(`/api/doctors/${doctorId}`).send({ email: data.email });
+        // Arrange
+        const existEmail = 'existdoctor@dawiny.com'
+        await createDoctorandItsToken({ ...data, email: existEmail });
+        const doctor = await createDoctorandItsToken({ ...data, email: 'doctor@dawiny.com' });
+
+        // Act
+        const res = await request.patch(`/api/doctors/${doctor._id}`)
+            .set('Authorization', doctor.access)
+            .send({ email: existEmail });
+
+        // Assert
         expect(res.status).toBe(422);
     });
-    
+
+
     test('should respond with 400 status code when updating to invaled rate', async () => {
-        let res = await request.post('/api/doctors').send(data);
-        const doctorId = res.body._id;
-        res = await request.patch(`/api/doctors/${doctorId}`).send({ rate: 10 });
+        // Arrange        
+        const doctor = await createDoctorandItsToken();
+
+        // Act
+        const res = await request.patch(`/api/doctors/${doctor._id}`)
+            .set('Authorization', doctor.access)
+            .send({ rate: 10 });
+
+        // Assert
         expect(res.status).toBe(400);
     });
 });

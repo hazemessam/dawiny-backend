@@ -1,3 +1,4 @@
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
@@ -5,6 +6,7 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 const mongoServer = new MongoMemoryServer();
 
 const setup = async () => {
+    dotenv.config({ path: './test.env' });
     await mongoServer.start();
     await mongoose.connect(mongoServer.getUri());
 }
