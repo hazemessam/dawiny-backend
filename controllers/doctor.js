@@ -45,7 +45,7 @@ const updateDoctorById = asyncWrapper(async (req, res) => {
     if (!doctor) throw new CustomError('Not found', 404);
 
     const email = req.body.email;
-    if (await Doctor.findOne({ email }))
+    if (email && await Doctor.findOne({ email }))
         throw new CustomError(`${email} is already exist`, 422);
 
     const updateOptions =  { returnOriginal: false, runValidators: true };

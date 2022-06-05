@@ -9,7 +9,6 @@ const { genAccessToken } = require('../../services/auth/token');
 
 const request = supertest(app);
 
-
 const data = {
     email: 'user@dawiny.com',
     password: '1234',

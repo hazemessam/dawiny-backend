@@ -7,6 +7,8 @@ const Doctor = require('../../models/doctor');
 const { genAccessToken } = require('../../services/auth/token');
 
 
+const request = supertest(app);
+
 const data = {
     email: 'user@dawiny.com',
     password: '1234',
@@ -22,8 +24,6 @@ async function createDoctorAndItsToken(doctorData = data) {
     return doctor;
 }
 
-
-const request = supertest(app);
 
 describe('DELETE /api/doctors/:id', () => {
     test('should respond with 200 status code', async () => {
