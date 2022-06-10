@@ -20,7 +20,7 @@ app.use(logger);
 app.use(express.json());
 
 // Handle routes
-app.get('/', () => res.json({ msg: 'Server is running...' }));
+app.get('/', (req, res) => res.json({ msg: 'Server is running...' }));
 app.use('/api/auth', authRouter);
 app.use('/api/doctors', doctorRouter);
 app.use('/api/patients', patientRouter);
