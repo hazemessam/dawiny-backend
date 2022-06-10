@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { CustomError } = require("../utils/errors");
 
 
-const errorHandler = (err, req, res, next) => {    
+function errorHandler(err, req, res, next) {
     if (process.env.NODE_ENV != 'test')
         console.log(err);
 

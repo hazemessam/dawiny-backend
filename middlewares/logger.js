@@ -1,4 +1,4 @@
-const logger = (req, res, next) => {
+function logger(req, res, next) {
     if (process.env.NODE_ENV == 'test')
         return next();
 
@@ -9,7 +9,7 @@ const logger = (req, res, next) => {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
-    }
+    };
     const dateTimeFormater = Intl.DateTimeFormat('en-EG', options);
     let [date, time] = dateTimeFormater.format(new Date()).split(', ');
     const [month, day, year] = date.split('/');

@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8080;
 const DB_URI = process.env.DB_URI;
 
 
-const runServer = async () => {
+async function runServer() {
     try {
         await mongoose.connect(DB_URI);
         console.log(`Connected to db ${mongoose.connection.db.databaseName}`);

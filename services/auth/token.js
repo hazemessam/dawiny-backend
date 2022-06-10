@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 
 
-const genAccessToken = (payload, exp = '1h') => {
+function genAccessToken(payload, exp = '1h') {
     const options = { expiresIn: exp };
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, options);
     return access;
 }
 
 
-const genRefreshToken = (payload) => {
+function genRefreshToken(payload) {
     const refresh = jwt.sign(payload, process.env.REFRESH_SECRET);
     /*
     TODO: Create redis server
