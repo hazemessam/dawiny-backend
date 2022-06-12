@@ -137,10 +137,12 @@ describe('GET /api/doctors/:id', () => {
 
     test('should respond with 404 status code if the doctor does not exist', async () => {
         // Arrange
-        const unExistId = '6260fb7e39818e48bb725388';
+        const access = await createPatientandGetItsToken();
 
         // Act
-        res = await request.get(`/api/doctors/${unExistId}`);
+        const unExistId = '6260fb7e39818e48bb725388';
+        const res = await request.get(`/api/doctors/${unExistId}`)
+            .set('Authorization', access);
 
         // Assert
         expect(res.status).toBe(404);
