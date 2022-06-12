@@ -3,42 +3,64 @@ const supertest = require('supertest');
 
 // Application modules
 const app = require('../../app');
+const Nurse = require('../../models/nurse');
+const { genAccessToken } = require('../../services/auth/token');
 
 
 const request = supertest(app);
 
-describe('DELETE /api/nurses/:id', () => {
-    const data = {
-        email: 'test@dawiny.com',
-        password: '1234',
-        firstName: 'Hazem',
-        lastName: 'Essam'
-    }
+const data = {
+    email: 'test@dawiny.com',
+    password: '1234',
+    firstName: 'Hazem',
+    lastName: 'Essam'
+}
 
+
+async function createNurseAndItsToken(nurseData = data) {
+    const nurse = await Nurse.create(nurseData);
+    const payload = {doctorId: nurse._id, role: 'nurse'};
+    nurse.access = genAccessToken(payload);
+    return nurse;
+}
+
+
+describe('DELETE /api/nurses/:id', () => {
     test('should respond with 200 status code', async () => {
-        let res = await request.post('/api/nurses').send(data);
-        const nurseId = res.body._id;
-        res = await request.delete(`/api/nurses/${nurseId}`);
+        // Arrange
+        const nurse = await createNurseAndItsToken();
+
+        // Act
+        const res = await request.delete(`/api/nurses/${nurse._id}`)
+            .set('Authorization', nurse.access);
+
+        // Assert
         expect(res.status).toBe(200);
     });
-    
+
+
     test('should return json response', async () => {
-        let res = await request.post('/api/nurses').send(data);
-        const nurseId = res.body._id;
-        res = await request.delete(`/api/nurses/${nurseId}`);
+        // Arrange
+        const nurse = await createNurseAndItsToken();
+
+        // Act
+        const res = await request.delete(`/api/nurses/${nurse._id}`)
+            .set('Authorization', nurse.access);
+
+        // Assert
         expect(res.headers['content-type']).toMatch('json');
     });
-    
+
+
     test('should return nurseId', async () => {
-        let res = await request.post('/api/nurses').send(data);
-        const nurseId = res.body._id;
-        res = await request.delete(`/api/nurses/${nurseId}`);
-        expect(res.body._id).toEqual(nurseId);
-    });
-    
-    test('should respond with 404 status code if the nurse does not exist', async () => {
-        const nurseId = '6260fb7e39818e48bb725388';
-        res = await request.delete(`/api/nurses/${nurseId}`);
-        expect(res.status).toBe(404);
+        // Arrange
+        const nurse = await createNurseAndItsToken();
+
+        // Act
+        const res = await request.delete(`/api/nurses/${nurse._id}`)
+            .set('Authorization', nurse.access);
+
+        // Assert
+        expect(res.body._id).toEqual(nurse._id.toString());
     });
 });
