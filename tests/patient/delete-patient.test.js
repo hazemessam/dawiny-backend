@@ -17,7 +17,7 @@ const data = {
 }
 
 
-async function createPatientAndItsToken(patientData = data) {
+async function createPatient(patientData = data) {
     const patient = await Patient.create(patientData);
     const payload = { userId: patient._id, role: 'patient' };
     patient.access = genAccessToken(payload);
@@ -28,7 +28,7 @@ async function createPatientAndItsToken(patientData = data) {
 describe('DELETE /api/patients/:id', () => {
     test('should respond with 200 status code', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.delete(`/api/patients/${patient._id}`)
@@ -41,7 +41,7 @@ describe('DELETE /api/patients/:id', () => {
 
     test('should return json response', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.delete(`/api/patients/${patient._id}`)
@@ -54,7 +54,7 @@ describe('DELETE /api/patients/:id', () => {
 
     test('should return patientId', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.delete(`/api/patients/${patient._id}`)
@@ -66,7 +66,7 @@ describe('DELETE /api/patients/:id', () => {
     
     test('should respond with 404 status code if the patient does not exist', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const patientId = '6260fb7e39818e48bb725388';

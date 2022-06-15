@@ -17,7 +17,7 @@ const data = {
 }
 
 
-async function createNurseAndItsToken(nurseData = data) {
+async function createNurse(nurseData = data) {
     const nurse = await Nurse.create(nurseData);
     const payload = { userId: nurse._id, role: 'nurse' };
     nurse.access = genAccessToken(payload);
@@ -28,7 +28,7 @@ async function createNurseAndItsToken(nurseData = data) {
 describe('PATCH /api/nurses/:id', () => {
     test('should respond with 200 status code', async () => { 
         // Arrange        
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
         const res = await request.patch(`/api/nurses/${nurse._id}`)
@@ -42,7 +42,7 @@ describe('PATCH /api/nurses/:id', () => {
 
     test('should return json response', async () => {
         // Arrange        
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
         const res = await request.patch(`/api/nurses/${nurse._id}`)
@@ -56,7 +56,7 @@ describe('PATCH /api/nurses/:id', () => {
 
     test('should return updated nurse', async () => {
         // Arrange        
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
         const updatedEmail = 'updated@dawiny.com';
@@ -71,7 +71,7 @@ describe('PATCH /api/nurses/:id', () => {
 
     test('should respond with 404 status code if the nurse does not exist', async () => {
         // Arrange        
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
         const unExistId = '6260fb7e39818e48bb725388';
@@ -87,8 +87,8 @@ describe('PATCH /api/nurses/:id', () => {
     test('should respond with 422 status code when updating to existing email', async () => {
         // Arrange
         const existEmail = 'existnurse@dawiny.com'
-        await createNurseAndItsToken({ ...data, email: existEmail });
-        const nurse = await createNurseAndItsToken({ ...data, email: 'nurse@dawiny.com' });
+        await createNurse({ ...data, email: existEmail });
+        const nurse = await createNurse({ ...data, email: 'nurse@dawiny.com' });
 
         // Act
         const res = await request.patch(`/api/nurses/${nurse._id}`)
@@ -102,10 +102,12 @@ describe('PATCH /api/nurses/:id', () => {
 
     test('should respond with 400 status code when updating to invaled rate', async () => {
         // Arrange
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
-        const res = await request.patch(`/api/nurses/${nurse._id}`).send({ rate: 10 });
+        const res = await request.patch(`/api/nurses/${nurse._id}`)
+            .set('Authorization', nurse.access)
+            .send({ rate: 10 });
         
         // Assert
         expect(res.status).toBe(400);

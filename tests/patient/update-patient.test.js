@@ -17,7 +17,7 @@ const data = {
 };
 
 
-async function createPatientAndItsToken(patientData = data) {
+async function createPatient(patientData = data) {
     const patient = await Patient.create(patientData);
     const payload = { userId: patient._id, role: 'patient' };
     patient.access = genAccessToken(payload);
@@ -28,7 +28,7 @@ async function createPatientAndItsToken(patientData = data) {
 describe('PATCH /api/patients/:id', () => {
     test('should respond with 200 status code', async () => { 
         // Arrange        
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.patch(`/api/patients/${patient._id}`)
@@ -42,7 +42,7 @@ describe('PATCH /api/patients/:id', () => {
 
     test('should return json response', async () => {
         // Arrange        
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.patch(`/api/patients/${patient._id}`)
@@ -56,7 +56,7 @@ describe('PATCH /api/patients/:id', () => {
 
     test('should return updated patient', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const updatedEmail = 'updated@dawiny.com';
@@ -71,7 +71,7 @@ describe('PATCH /api/patients/:id', () => {
 
     test('should respond with 404 status code if the patient does not exist', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const unExistId = '6260fb7e39818e48bb725388';
@@ -87,8 +87,8 @@ describe('PATCH /api/patients/:id', () => {
     test('should respond with 422 status code when updating to existing email', async () => {
         // Arrange
         const existEmail = 'exist@dawiny.com'
-        await createPatientAndItsToken({ ...data, email: existEmail });
-        const patient = await createPatientAndItsToken({ ...data, email: 'patient@dawiny.com' });
+        await createPatient({ ...data, email: existEmail });
+        const patient = await createPatient({ ...data, email: 'patient@dawiny.com' });
 
         // Act
         const res = await request.patch(`/api/patients/${patient._id}`)

@@ -18,10 +18,11 @@ const data = {
 }
 
 
-async function createPatientandGetItsToken(patientData = data) {
+async function createPatient(patientData = data) {
     const patient = await Patient.create(patientData);
     const payload = { userId: patient._id, role: 'patient' };
-    return genAccessToken(payload);
+    patient.access = genAccessToken(payload);
+    return patient;
 }
 
 
@@ -33,10 +34,10 @@ async function createDoctor(doctorData = data) {
 describe('GET /api/doctors', () => {
     test('should respond with 200 status code', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
 
         // Act
-        const res = await request.get('/api/doctors').set('Authorithation', access);
+        const res = await request.get('/api/doctors').set('Authorization', patient.access);
 
         // Assert
         expect(res.status).toBe(200);
@@ -45,10 +46,10 @@ describe('GET /api/doctors', () => {
 
     test('should return json response', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
 
         // Act
-        const res = await request.get('/api/doctors').set('Authorithation', access);
+        const res = await request.get('/api/doctors').set('Authorization', patient.access);
 
         // Assert
         expect(res.headers['content-type']).toMatch('json');
@@ -57,10 +58,10 @@ describe('GET /api/doctors', () => {
 
     test('should return array', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
 
         // Act
-        const res = await request.get('/api/doctors').set('Authorithation', access);
+        const res = await request.get('/api/doctors').set('Authorization', patient.access);
 
         // Assert
         expect(Array.isArray(res.body)).toBe(true);
@@ -69,11 +70,11 @@ describe('GET /api/doctors', () => {
 
     test('should return array contains a doctor', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
         const doctor = await createDoctor();
 
         // Act
-        const res = await request.get('/api/doctors').set('Authorithation', access);
+        const res = await request.get('/api/doctors').set('Authorization', patient.access);
 
         // Assert
         expect(res.body.length).toBe(1);
@@ -85,11 +86,12 @@ describe('GET /api/doctors', () => {
 describe('GET /api/doctors/:id', () => {
     test('should respond with 200 status code', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
         const doctor = await createDoctor();
 
         // Act
-        const res = await request.get(`/api/doctors/${doctor._id}`).set('Authorithation', access);
+        const res = await request.get(`/api/doctors/${doctor._id}`)
+            .set('Authorization', patient.access);
 
         // Assert
         expect(res.status).toBe(200);
@@ -98,11 +100,12 @@ describe('GET /api/doctors/:id', () => {
 
     test('should return json response', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
         const doctor = await createDoctor();
 
         // Act
-        const res = await request.get(`/api/doctors/${doctor._id}`).set('Authorithation', access);
+        const res = await request.get(`/api/doctors/${doctor._id}`)
+            .set('Authorization', patient.access);
 
         // Assert
         expect(res.headers['content-type']).toMatch('json');
@@ -111,11 +114,12 @@ describe('GET /api/doctors/:id', () => {
 
     test('should return doctor with email field', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
         const doctor = await createDoctor();
 
         // Act
-        const res = await request.get(`/api/doctors/${doctor._id}`).set('Authorithation', access);
+        const res = await request.get(`/api/doctors/${doctor._id}`)
+            .set('Authorization', patient.access);
 
         // Assert
         expect(res.body).toHaveProperty('email');
@@ -124,11 +128,12 @@ describe('GET /api/doctors/:id', () => {
 
     test('should return doctor without passowrd field', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
         const doctor = await createDoctor();
 
         // Act
-        const res = await request.get(`/api/doctors/${doctor._id}`).set('Authorithation', access);
+        const res = await request.get(`/api/doctors/${doctor._id}`)
+            .set('Authorization', patient.access);
 
         // Assert
         expect(res.body).not.toHaveProperty('password');
@@ -137,12 +142,12 @@ describe('GET /api/doctors/:id', () => {
 
     test('should respond with 404 status code if the doctor does not exist', async () => {
         // Arrange
-        const access = await createPatientandGetItsToken();
+        const patient = await createPatient();
 
         // Act
         const unExistId = '6260fb7e39818e48bb725388';
         const res = await request.get(`/api/doctors/${unExistId}`)
-            .set('Authorization', access);
+            .set('Authorization', patient.access);
 
         // Assert
         expect(res.status).toBe(404);

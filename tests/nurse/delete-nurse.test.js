@@ -17,7 +17,7 @@ const data = {
 }
 
 
-async function createNurseAndItsToken(nurseData = data) {
+async function createNurse(nurseData = data) {
     const nurse = await Nurse.create(nurseData);
     const payload = {doctorId: nurse._id, role: 'nurse'};
     nurse.access = genAccessToken(payload);
@@ -28,7 +28,7 @@ async function createNurseAndItsToken(nurseData = data) {
 describe('DELETE /api/nurses/:id', () => {
     test('should respond with 200 status code', async () => {
         // Arrange
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
         const res = await request.delete(`/api/nurses/${nurse._id}`)
@@ -41,7 +41,7 @@ describe('DELETE /api/nurses/:id', () => {
 
     test('should return json response', async () => {
         // Arrange
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
         const res = await request.delete(`/api/nurses/${nurse._id}`)
@@ -54,7 +54,7 @@ describe('DELETE /api/nurses/:id', () => {
 
     test('should return nurseId', async () => {
         // Arrange
-        const nurse = await createNurseAndItsToken();
+        const nurse = await createNurse();
 
         // Act
         const res = await request.delete(`/api/nurses/${nurse._id}`)

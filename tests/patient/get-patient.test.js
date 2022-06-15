@@ -17,7 +17,7 @@ const data = {
 }
 
 
-async function createPatientAndItsToken(patientData = data) {
+async function createPatient(patientData = data) {
     const patient = await Patient.create(patientData);
     const payload = { userId: patient._id, role: 'patient' };
     patient.access = genAccessToken(payload);
@@ -28,7 +28,7 @@ async function createPatientAndItsToken(patientData = data) {
 describe('GET /api/patients/:id', () => {
     test('should respond with 200 status code', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.get(`/api/patients/${patient._id}`)
@@ -41,7 +41,7 @@ describe('GET /api/patients/:id', () => {
 
     test('should return json response', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.get(`/api/patients/${patient._id}`)
@@ -54,7 +54,7 @@ describe('GET /api/patients/:id', () => {
 
     test('should return patient with email field', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.get(`/api/patients/${patient._id}`)
@@ -67,7 +67,7 @@ describe('GET /api/patients/:id', () => {
 
     test('should return patient without passowrd field', async () => {
         // Arrange
-        const patient = await createPatientAndItsToken();
+        const patient = await createPatient();
 
         // Act
         const res = await request.get(`/api/patients/${patient._id}`)
