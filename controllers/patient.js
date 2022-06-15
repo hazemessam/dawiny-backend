@@ -7,12 +7,6 @@ const { asyncWrapper, CustomError } = require('../utils/errors');
 const { genAccessToken, genRefreshToken } = require('../services/auth/token');
 
 
-const getAllPatients = asyncWrapper(async (req, res) => {
-    const patients = await Patient.find();
-    return res.json(patients.map(p => { p.password = undefined; return p }));
-});
-
-
 const getPatientById = asyncWrapper(async (req, res) => {
     const patient = await Patient.findById(req.params.id);
     if (!patient) throw new CustomError('Not found', 404);
@@ -65,7 +59,6 @@ const deletePatientById = asyncWrapper(async (req, res) => {
 
 
 module.exports = {
-    getAllPatients,
     getPatientById,
     addPatient,
     updatePatientById,
