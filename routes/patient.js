@@ -2,14 +2,13 @@
 const express = require('express');
 
 // Application modules
-const { getAllPatients, getPatientById, addPatient, updatePatientById, deletePatientById } = require('../controllers/patient');
+const { getPatientById, addPatient, updatePatientById, deletePatientById } = require('../controllers/patient');
+// const { authenticate } = require('../middlewares/auth');
 
 
 const router = express.Router();
 
-router.route('/')
-    .get(getAllPatients)
-    .post(addPatient);
+router.route('/').post(addPatient);
 
 router.route('/:id')
     .get(getPatientById)
