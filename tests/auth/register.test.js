@@ -3,7 +3,6 @@ const supertest = require('supertest');
 
 // Application modules
 const app = require('../../app');
-const Doctor = require('../../models/doctor');
 
 
 const request = supertest(app);
@@ -15,7 +14,7 @@ const data = {
     lastName: 'Essam'
 }
 
-describe('[Auth] POST /api/doctors', () => {
+describe('POST /api/doctors [Auth]', () => {
     test('should return 201 status code when successfully register', async () => {
         // Act
         const res = await request.post('/api/doctors').send(data);

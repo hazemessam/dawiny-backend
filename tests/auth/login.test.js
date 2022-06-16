@@ -16,7 +16,7 @@ const data = {
     lastName: 'Essam'
 }
 
-describe('[Auth] POST /api/auth/login', () => {
+describe('POST /api/auth/login [Auth]', () => {
     test('should return 200 status code when successfully login', async () => {
         // Arrange
         const hash = await bcrypt.hash(data.password, 10);
