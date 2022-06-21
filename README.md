@@ -43,7 +43,6 @@ $ npm start
 ## API Endpoints
 | Method | Endpoint | Description |
 | - | - | - |
-| GET | /api/patients | Get all patients |
 | GET | /api/patients/:id | Get a patient by its id
 | POST | /api/patients | Create a new patient |
 | PATCH | /api/patients/:id | Update a patient by its id |
