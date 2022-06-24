@@ -19,7 +19,7 @@ const data = {
 
 async function createDoctor(doctorData = data) {
     const doctor = await Doctor.create(doctorData);
-    const payload = {doctorId: doctor._id, role: 'doctor'};
+    const payload = {userId: doctor._id, role: 'doctor'};
     doctor.access = genAccessToken(payload);
     return doctor;
 }

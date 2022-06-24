@@ -63,17 +63,4 @@ describe('DELETE /api/patients/:id', () => {
         // Assert
         expect(res.body._id).toEqual(patient._id.toString());
     });
-    
-    test('should respond with 404 status code if the patient does not exist', async () => {
-        // Arrange
-        const patient = await createPatient();
-
-        // Act
-        const patientId = '6260fb7e39818e48bb725388';
-        const res = await request.delete(`/api/patients/${patientId}`)
-            .set('Authorization', patient.access);
-
-        // Assert
-        expect(res.status).toBe(404);
-    });
 });

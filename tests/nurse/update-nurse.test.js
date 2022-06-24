@@ -27,7 +27,7 @@ async function createNurse(nurseData = data) {
 
 describe('PATCH /api/nurses/:id', () => {
     test('should respond with 200 status code', async () => { 
-        // Arrange        
+        // Arrange
         const nurse = await createNurse();
 
         // Act
@@ -41,7 +41,7 @@ describe('PATCH /api/nurses/:id', () => {
 
 
     test('should return json response', async () => {
-        // Arrange        
+        // Arrange
         const nurse = await createNurse();
 
         // Act
@@ -55,7 +55,7 @@ describe('PATCH /api/nurses/:id', () => {
 
 
     test('should return updated nurse', async () => {
-        // Arrange        
+        // Arrange
         const nurse = await createNurse();
 
         // Act
@@ -66,21 +66,6 @@ describe('PATCH /api/nurses/:id', () => {
 
         // Assert
         expect(res.body.email).toEqual(updatedEmail);
-    });
-
-
-    test('should respond with 404 status code if the nurse does not exist', async () => {
-        // Arrange        
-        const nurse = await createNurse();
-
-        // Act
-        const unExistId = '6260fb7e39818e48bb725388';
-        const res = await request.patch(`/api/nurses/${unExistId}`)
-            .set('Authorization', nurse.access)
-            .send({ email: 'updated@dawiny.com' });
-
-        // Assert
-        expect(res.status).toBe(404);
     });
 
 
@@ -108,7 +93,7 @@ describe('PATCH /api/nurses/:id', () => {
         const res = await request.patch(`/api/nurses/${nurse._id}`)
             .set('Authorization', nurse.access)
             .send({ rate: 10 });
-        
+
         // Assert
         expect(res.status).toBe(400);
     });

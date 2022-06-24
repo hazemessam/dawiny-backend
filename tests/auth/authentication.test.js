@@ -1,6 +1,5 @@
 // Third party modules
 const supertest = require('supertest');
-const bcrypt = require('bcrypt');
 
 // Application modules
 const app = require('../../app');
@@ -18,7 +17,7 @@ const data = {
 }
 
 
-async function craeteDoctor(doctorData = data, tokenExp = '1h') {
+async function createDoctor(doctorData = data, tokenExp = '1h') {
     const doctor = await Doctor.create(doctorData);
     const payload = { userId: doctor._id, role: 'doctor' };
     doctor.access = genAccessToken(payload, tokenExp);
@@ -30,7 +29,7 @@ async function craeteDoctor(doctorData = data, tokenExp = '1h') {
 describe('POST /api/auth/login [Auth]', () => {
     test('should return 200 status code when authenticate successfully', async () => {
         // Arrange
-        const doctor = await craeteDoctor();
+        const doctor = await createDoctor();
 
         // Act
         const res = await request.get(`/api/doctors/${doctor._id}`)
@@ -43,7 +42,7 @@ describe('POST /api/auth/login [Auth]', () => {
 
     test('should return 401 status code when auth header is empty', async () => {
         // Arrange
-        const doctor = await craeteDoctor();
+        const doctor = await createDoctor();
 
         // Act
         const res = await request.get(`/api/doctors/${doctor._id}`);
@@ -55,7 +54,7 @@ describe('POST /api/auth/login [Auth]', () => {
 
     test('should return 401 status code when access token is invalid', async () => {
         // Arrange
-        const doctor = await craeteDoctor();
+        const doctor = await createDoctor();
 
         // Act
         const invalidAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
@@ -71,7 +70,7 @@ describe('POST /api/auth/login [Auth]', () => {
 
     test('should return 401 status code when access token is expired', async () => {
         // Arrange
-        const doctor = await craeteDoctor(data, tokenExp='1s');
+        const doctor = await createDoctor(data, tokenExp='1s');
 
         // Act
         await new Promise((resolve) => setTimeout(() => resolve(), 1500));

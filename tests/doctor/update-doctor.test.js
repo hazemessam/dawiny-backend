@@ -69,21 +69,6 @@ describe('PATCH /api/doctors/:id', () => {
     });
 
 
-    test('should respond with 404 status code if the doctor does not exist', async () => {
-        // Arrange
-        const doctor = await createDoctor();
-
-        // Act
-        const unExistId = '6260fb7e39818e48bb725388';
-        const res = await request.patch(`/api/doctors/${unExistId}`)
-            .set('Authorization', doctor.access)
-            .send({ email: 'updated@dawiny.com' });
-
-        // Assert
-        expect(res.status).toBe(404);
-    });
-
-
     test('should respond with 422 status code when updating to existing email', async () => {
         // Arrange
         const existEmail = 'existdoctor@dawiny.com'
