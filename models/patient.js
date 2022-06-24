@@ -27,8 +27,8 @@ const patientSchema = mongoose.Schema({
         trim: true,
         enum: ['male', 'female'] 
     },
-    age: {
-        type: Number
+    dateOfBirth: {
+        type: String
     },
     imageUrl: {
         type: String,
