@@ -2,11 +2,11 @@
 const bcrypt = require('bcrypt');
 
 // Application modules
-const Patient = require('../../models/patient');
-const Doctor = require('../../models/doctor');
-const Nurse = require('../../models/nurse');
-const { asyncWrapper, CustomError } = require('../../utils/errors');
-const { genAccessToken, genRefreshToken } = require('./token');
+const Patient = require('../models/patient');
+const Doctor = require('../models/doctor');
+const Nurse = require('../models/nurse');
+const { asyncWrapper, CustomError } = require('../utils/errors');
+const { genAccessToken, genRefreshToken } = require('../services/auth/token');
 
 
 const login = asyncWrapper(async (req, res) => {

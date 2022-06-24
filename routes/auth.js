@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Application modules
-const { login } = require('../services/auth/login');
+const { login } = require('../controllers/login');
 
 
 const router = express.Router();
