@@ -43,7 +43,7 @@ const updatePatientById = asyncWrapper(async (req, res) => {
         throw new CustomError(`${email} is already exist`, 422);
 
     const password = req.body.password;
-    if(password) req.body.password = await bcrypt.hash(password, 10);
+    if (password) req.body.password = await bcrypt.hash(password, 10);
 
     const updateOptions =  { returnOriginal: false, runValidators: true };
     patient = await Patient.findByIdAndUpdate(req.params.id, req.body, updateOptions);
