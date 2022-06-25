@@ -3,7 +3,7 @@ const supertest = require('supertest');
 
 // Application modules
 const app = require('../../app');
-const Patient = require('../../models/patient');
+const { Patient } = require('../../models/patient');
 
 
 const request = supertest(app);

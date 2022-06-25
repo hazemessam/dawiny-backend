@@ -12,4 +12,6 @@ const patientSchema = mongoose.Schema({
     address: { type: String, trim: true }
 });
 
-module.exports = mongoose.model('Patient', patientSchema);
+module.exports = {
+    Patient: mongoose.model('Patient', patientSchema)
+}

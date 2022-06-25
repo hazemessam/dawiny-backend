@@ -3,8 +3,8 @@ const supertest = require('supertest');
 
 // Application modules
 const app = require('../../app');
-const Doctor = require('../../models/doctor.js');
-const Patient = require('../../models/patient.js');
+const { Doctor } = require('../../models/doctor.js');
+const { Patient } = require('../../models/patient.js');
 const { genAccessToken } = require('../../services/auth/token');
 
 

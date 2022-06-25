@@ -14,4 +14,6 @@ const nurseSchema = mongoose.Schema({
     status: { type: String, trim: true, enum: ["online", "offline"] }
 });
 
-module.exports = mongoose.model('Nurse', nurseSchema);
+module.exports = {
+    Nurse: mongoose.model('Nurse', nurseSchema)
+}

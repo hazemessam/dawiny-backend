@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt');
 
 // Application modules
-const Nurse = require('../models/nurse');
+const { Nurse } = require('../models/nurse');
 const { asyncWrapper, CustomError } = require('../utils/errors');
 const { genAccessToken, genRefreshToken } = require('../services/auth/token');
 

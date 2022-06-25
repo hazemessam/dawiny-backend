@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 // Application modules
 const app = require('../../app');
-const Doctor = require('../../models/doctor');
+const { Doctor } = require('../../models/doctor');
 
 
 const request = supertest(app);

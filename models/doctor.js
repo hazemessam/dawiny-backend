@@ -17,4 +17,14 @@ const doctorSchema = mongoose.Schema({
     slots: { type: [{ day: String, start: String, end: String }] }
 });
 
-module.exports = mongoose.model('Doctor', doctorSchema);
+const doctorReservasionSchema = mongoose.Schema({
+    doctorId: { type: mongoose.Types.ObjectId, required: true },
+    patientId: { type: mongoose.Types.ObjectId, required: true },
+    slotId: { type: mongoose.Types.ObjectId, required: true },
+    date: { type: String, required: true, trim: true }
+});
+
+module.exports = {
+    Doctor: mongoose.model('Doctor', doctorSchema),
+    DoctorReservation: mongoose.model('DoctorReservation', doctorReservasionSchema),
+}
