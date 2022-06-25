@@ -1,4 +1,7 @@
+// Third party modules
 const jwt = require('jsonwebtoken');
+
+// Application modules
 const { CustomError } = require('../../utils/errors');
 
 
@@ -25,7 +28,7 @@ function verifyToken(token, key) {
         throw new CustomError('Invalid token', 401);
     }
 
-    return payload
+    return payload;
 }
 
 

@@ -3,33 +3,33 @@ const bcrypt = require('bcrypt');
 
 // Application modules
 const { Nurse } = require('../models/nurse');
-const { asyncWrapper, CustomError } = require('../utils/errors');
+const { CustomError } = require('../utils/errors');
 const { genAccessToken, genRefreshToken } = require('../services/auth/token');
 
 
-const getAllNurses = asyncWrapper(async (req, res) => {
+async function getAllNurses(req, res, next) {
     const nurses = await Nurse.find();
-    return res.json(nurses.map(n => { n.password = undefined; return n }));
-});
+    return res.json(nurses.map(n => { n.password = undefined; return n; }));
+}
 
 
-const getNurseById = asyncWrapper(async (req, res) => {
+async function getNurseById(req, res, next) {
     const nurse = await Nurse.findById(req.params.id);
-    if (!nurse) throw new CustomError('Not found', 404);
+    if (!nurse) return next(new CustomError('Not found', 404));
 
     nurse.password = undefined;
     return res.json(nurse);
-});
+}
 
 
-const addNurse = asyncWrapper(async (req, res) => {
+async function addNurse(req, res, next) {
     const email = req.body.email;
-    if (!email) throw new CustomError(`Email must be exist`, 400);
+    if (!email) return next(new CustomError(`Email must be exist`, 400));
     let nurse = await Nurse.findOne({ email });
-    if (nurse) throw new CustomError(`${req.body.email} is already exist`, 422);
+    if (nurse) return next(new CustomError(`${req.body.email} is already exist`, 422));
 
     const password = req.body.password;
-    if (!password) throw new CustomError(`Password must be exist`, 400);
+    if (!password) return next(new CustomError(`Password must be exist`, 400));
     req.body.password = await bcrypt.hash(password, 10);
 
     nurse = await Nurse.create(req.body);
@@ -37,34 +37,34 @@ const addNurse = asyncWrapper(async (req, res) => {
     const access = genAccessToken(payload, '1h');
     const refresh = genRefreshToken(payload);
     return res.status(201).json({ access, refresh });
-});
+}
 
 
-const updateNurseById = asyncWrapper(async (req, res) => {
+async function updateNurseById(req, res, next) {
     let nurse = await Nurse.findById(req.params.id);
-    if (!nurse) throw new CustomError('Not found', 404);
+    if (!nurse) return next(new CustomError('Not found', 404));
 
     const email = req.body.email;
     if (email && await Nurse.findOne({ email }))
-        throw new CustomError(`${email} is already exist`, 422);
+        return next(new CustomError(`${email} is already exist`, 422));
 
     const password = req.body.password;
     if (password) req.body.password = await bcrypt.hash(password, 10);
 
-    const updateOptions =  { returnOriginal: false, runValidators: true };
+    const updateOptions = { returnOriginal: false, runValidators: true };
     nurse = await Nurse.findByIdAndUpdate(req.params.id, req.body, updateOptions);
 
     nurse.password = undefined;
     return res.json(nurse);
-});
+}
 
 
-const deleteNurseById = asyncWrapper(async (req, res) => {
+async function deleteNurseById(req, res, next) {
     const nurse = await Nurse.findByIdAndDelete(req.params.id);
-    if (!nurse) throw new CustomError('Not found', 404);
+    if (!nurse) return next(new CustomError('Not found', 404));
 
-    res.json({_id: nurse._id});
-});
+    res.json({ _id: nurse._id });
+}
 
 
 module.exports = {
