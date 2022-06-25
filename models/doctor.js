@@ -14,7 +14,7 @@ const doctorSchema = mongoose.Schema({
     price: { type: Number, default: 0.0 },
     rate: { type: Number, default: 0, min: 0, max: 5 },
     status: { type: String, trim: true, enum: ["online", "offline"] },
-    slots: { type: [{ day: String, start: String, end: String }] }
+    appointments: { type: [{ day: String, start: String, end: String }] }
 });
 
 const doctorReservasionSchema = mongoose.Schema({
