@@ -26,12 +26,17 @@ function authenticate(req, res, next) {
 
 function authorize(action) {
     return (req, res, next) => {
-        const isSelf = (req.user.id == req.params.id);
-        if (!permissions[req.user.role].includes(isSelf? `${action}:self` : action))
+        const permission = (req.user.id == req.params.id)? `${action}:self` : action;
+        if (!hasPermission(req.user.role, permission))
             return next(new CustomError('Access denied!', 403));
 
         return next();
     }
+}
+
+
+function hasPermission(role, permission) {
+    return permissions[role].includes(permission);
 }
 
 
