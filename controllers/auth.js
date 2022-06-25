@@ -6,13 +6,13 @@ const { Patient } = require('../models/patient');
 const { Doctor } = require('../models/doctor');
 const { Nurse } = require('../models/nurse');
 const { asyncWrapper, CustomError } = require('../utils/errors');
-const { genAccessToken, genRefreshToken } = require('../services/auth/token');
+const { genAccessToken, genRefreshToken, verifyToken } = require('../services/auth/token');
 
 
 const login = asyncWrapper(async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    if (!email || !password) 
+    if (!email || !password)
         throw new CustomError('Email and password are required', 400);
 
     const role = req.body.role;
@@ -46,10 +46,34 @@ const login = asyncWrapper(async (req, res) => {
     const payload = { userId: user._id, role };
     const access = genAccessToken(payload, '1h');
     const refresh = genRefreshToken(payload);
+
     return res.json({ access, refresh });
 });
 
 
+/*
+TODO: Create redis server
+TODO: Save the refresh token to the white list in the redis server
+{
+    role: {
+        id: [refreshTokens...]
+    }
+}
+*/
+function reGenAccessToken(req, res, next) {
+    const refresh = req.body.refresh;
+    if (!refresh)
+        return next(new CustomError('Missing refresh token', 400));
+
+    let payload = verifyToken(refresh, process.env.REFRESH_SECRET);
+    payload = { userId: payload.userId, role: payload.role };
+    const access = genAccessToken(payload);
+
+    return res.json({ access });
+}
+
+
 module.exports = {
-    login
+    login,
+    reGenAccessToken
 }

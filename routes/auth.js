@@ -2,12 +2,12 @@
 const express = require('express');
 
 // Application modules
-const { login } = require('../controllers/login');
+const { login, reGenAccessToken } = require('../controllers/auth');
 
 
 const router = express.Router();
 
-router.route('/login')
-    .post(login);
+router.route('/login').post(login);
+router.route('/token').post(reGenAccessToken);
 
 module.exports = router;

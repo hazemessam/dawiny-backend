@@ -73,12 +73,16 @@ describe('POST /api/auth/login [Auth]', () => {
         const doctor = await createDoctor(data, tokenExp='1s');
 
         // Act
+        const beforeExpirationRes = await request.get(`/api/doctors/${doctor._id}`)
+            .set('Authorization', doctor.access);
+
         await new Promise((resolve) => setTimeout(() => resolve(), 1500));
 
-        const res = await request.get(`/api/doctors/${doctor._id}`)
+        const afterExpirationRes = await request.get(`/api/doctors/${doctor._id}`)
             .set('Authorization', doctor.access);
 
         // Assert
-        expect(res.status).toBe(401);
+        expect(beforeExpirationRes.status).toBe(200);
+        expect(afterExpirationRes.status).toBe(401);
     });
 });

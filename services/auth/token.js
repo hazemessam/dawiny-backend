@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { CustomError } = require('../../utils/errors');
 
 
 function genAccessToken(payload, exp = '1h') {
@@ -10,20 +11,26 @@ function genAccessToken(payload, exp = '1h') {
 
 function genRefreshToken(payload) {
     const refresh = jwt.sign(payload, process.env.REFRESH_SECRET);
-    /*
-    TODO: Create redis server
-    TODO: Save the refresh token to the white list in the redis server
-    {
-        role: {
-            id: [refreshTokens...]
-        }
-    }
-    */
     return refresh;
+}
+
+
+function verifyToken(token, key) {
+    let payload;
+    try {
+        payload = jwt.verify(token, key);
+    } catch (err) {
+        if (err instanceof jwt.TokenExpiredError)
+            throw new CustomError('Expired token', 401);
+        throw new CustomError('Invalid token', 401);
+    }
+
+    return payload
 }
 
 
 module.exports = {
     genAccessToken,
-    genRefreshToken
+    genRefreshToken,
+    verifyToken
 }
