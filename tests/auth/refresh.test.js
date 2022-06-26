@@ -27,7 +27,7 @@ async function createDoctor(doctorData = data, tokenExp = '1h') {
 
 
 describe('POST /api/auth/token [Auth]', () => {
-    test('should respond with 200 status code when successfully generating a new acccess token', async () => {
+    test('should respond with 200 status code when successfully generating a new access token', async () => {
         // Arrange
         const doctor = await createDoctor();
 
