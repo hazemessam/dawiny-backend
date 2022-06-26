@@ -14,6 +14,8 @@ const actions = {
     DELETE_DOCTOR: 'delete:doctor',
     DELETE_DOCTOR_SELF: 'delete:doctor:self',
     BOOK_DOCTOR: 'book:doctor',
+    GET_DOCTOR_RESERVATIONS: 'get:doctor:reservations',
+    GET_DOCTOR_RESERVATIONS_SELF: 'get:doctor:reservations:self',
 
     GET_NURSE: 'get:nurse',
     GET_NURSE_SELF: 'get:nurse:self',
@@ -39,7 +41,8 @@ const permissions = {
         actions.GET_DOCTOR_SELF,
         actions.UPDATE_DOCTOR_SELF,
         actions.DELETE_DOCTOR_SELF,
-        actions.GET_PATIENT
+        actions.GET_PATIENT,
+        actions.GET_DOCTOR_RESERVATIONS_SELF
     ],
     nurse: [
         actions.GET_NURSE_SELF,

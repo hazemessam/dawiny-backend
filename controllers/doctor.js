@@ -108,6 +108,14 @@ async function bookAppointment(req, res, next) {
 }
 
 
+async function getDoctorReservations(req, res, next) {
+    const doctorId = req.params.id;
+    const doctorReservations = await DoctorReservation.find({ doctorId });
+    
+    return res.json(doctorReservations);
+}
+
+
 module.exports = {
     getAllDoctors,
     getDoctorById,
@@ -115,5 +123,6 @@ module.exports = {
     updateDoctorById,
     deleteDoctorById,
     checkAppointment,
-    bookAppointment
+    bookAppointment,
+    getDoctorReservations
 }

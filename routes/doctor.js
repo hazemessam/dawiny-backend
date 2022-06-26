@@ -3,7 +3,7 @@ const express = require('express');
 
 // Application modules
 const { getAllDoctors, getDoctorById, addDoctor, updateDoctorById, deleteDoctorById,
-    checkAppointment, bookAppointment } = require('../controllers/doctor');
+    checkAppointment, bookAppointment, getDoctorReservations } = require('../controllers/doctor');
 const { authenticate, authorize } = require('../middlewares/auth');
 const { actions } = require('../permissions');
 
@@ -20,6 +20,7 @@ router.route('/:id')
     .delete(authenticate, authorize(actions.DELETE_DOCTOR), deleteDoctorById);
 
 router.route('/:id/reservations')
+    .get(authenticate, authorize(actions.GET_DOCTOR_RESERVATIONS), getDoctorReservations)
     .post(authenticate, authorize(actions.BOOK_DOCTOR), checkAppointment, bookAppointment);
 
 module.exports = router;
