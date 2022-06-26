@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt');
 
 // Application modules
-const { Doctor } = require('../models/doctor');
+const { Doctor, DoctorReservation } = require('../models/doctor');
 const { CustomError } = require('../utils/errors');
 const { genAccessToken, genRefreshToken } = require('../services/auth/token');
 
@@ -67,10 +67,53 @@ async function deleteDoctorById(req, res, next) {
 }
 
 
+async function checkAppointment(req, res, next) {
+    const appointmentId = req.body.appointmentId;
+    const date = req.body.date;
+    if (!appointmentId || !date)
+    return next(new CustomError('Missing appointmentId or date', 400));
+
+    const doctorId = req.params.id;
+    const doctor = await Doctor.findById(doctorId);
+    if (!doctor) return next(new CustomError(`No doctor with id ${doctorId}`, 404));
+
+    const appointment = doctor.appointments.find(a => a._id == appointmentId);
+    if (!appointment) return next(new CustomError(`No appointment with id ${appointmentId}`, 404));
+
+    const query = { patientId: req.user.id, doctorId, appointmentId, date };
+    const isBooked = await DoctorReservation.findOne(query);
+
+    const check = req.query.check;
+    if (check && check.toLowerCase() == 'true')
+        return res.json({ available: isBooked? false : true });
+
+    if (isBooked) return next(new CustomError('This appointment is already booked', 422));
+
+    return next();
+}
+
+
+async function bookAppointment(req, res, next) {
+    const type = req.body.type;
+    if (!type) return next(new CustomError('Missing reservation type', 400));
+
+    const doctorReservationData = {
+        patientId: req.user.id, doctorId: req.params.id,
+        appointmentId: req.body.appointmentId,
+        date: req.body.date, type
+    };
+    const doctorReservation = await DoctorReservation.create(doctorReservationData);
+
+    return res.status(201).json(doctorReservation);
+}
+
+
 module.exports = {
     getAllDoctors,
     getDoctorById,
     addDoctor,
     updateDoctorById,
-    deleteDoctorById
+    deleteDoctorById,
+    checkAppointment,
+    bookAppointment
 }

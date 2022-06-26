@@ -13,15 +13,16 @@ const doctorSchema = mongoose.Schema({
     specification: { type: String, trim: true },
     price: { type: Number, default: 0.0 },
     rate: { type: Number, default: 0, min: 0, max: 5 },
-    status: { type: String, trim: true, enum: ["online", "offline"] },
+    status: { type: String, trim: true, enum: ['online', 'offline'] },
     appointments: { type: [{ day: String, start: String, end: String }] }
 });
 
 const doctorReservasionSchema = mongoose.Schema({
     doctorId: { type: mongoose.Types.ObjectId, required: true },
     patientId: { type: mongoose.Types.ObjectId, required: true },
-    slotId: { type: mongoose.Types.ObjectId, required: true },
-    date: { type: String, required: true, trim: true }
+    appointmentId: { type: mongoose.Types.ObjectId, required: true },
+    date: { type: String, required: true, trim: true },
+    type: { type: String, required: true, trim: true, enum: ['online', 'offline'] }
 });
 
 module.exports = {
