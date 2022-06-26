@@ -54,10 +54,10 @@ describe('POST /api/doctors/:id/reservations', () => {
         await DoctorReservation.create({ ...reservationData, appointmentId: doctor.appointments[0]._id, date: '2022-07-28' });
         await DoctorReservation.create({ ...reservationData, appointmentId: doctor.appointments[1]._id, date: '2022-07-28' });
         await DoctorReservation.create({ ...reservationData, appointmentId: doctor.appointments[0]._id, date: '2022-10-02' });
+        
         // Act
-
-        const res = await request.get(`/api/doctors/${doctor._id}/reservations`)
-            .set('Authorization', doctor.access);
+        const res = await request.get(`/api/patients/${patient._id}/reservations`)
+            .set('Authorization', patient.access);
 
         // Assert
         expect(res.status).toBe(200);
