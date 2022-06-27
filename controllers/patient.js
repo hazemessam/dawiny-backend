@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const { Patient } = require('../models/patient');
 const { CustomError } = require('../utils/errors');
 const { genAccessToken, genRefreshToken } = require('../services/auth/token');
-const { DoctorReservation } = require('../models/doctor');
+const { Doctor, DoctorReservation } = require('../models/doctor');
 
 
 async function getPatientById(req, res, next) {
@@ -65,8 +65,16 @@ async function deletePatientById(req, res, next) {
 async function getPatientReservations(req, res, next) {
     const patientId = req.params.id;
     const patientReservations = await DoctorReservation.find({ patientId });
-    
-    return res.json(patientReservations);
+
+    const data = [];
+    for (let reservation of patientReservations) {
+        const doctor = await Doctor.findById(reservation.doctorId);
+        const appointment = doctor.appointments.id(reservation.appointmentId);
+        doctor.password = undefined;
+        data.push({ doctor, appointment, date: reservation.date, type: reservation.type });
+    }
+
+    return res.json(data);
 }
 
 

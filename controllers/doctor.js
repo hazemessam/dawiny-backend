@@ -77,7 +77,7 @@ async function checkAppointment(req, res, next) {
     const doctor = await Doctor.findById(doctorId);
     if (!doctor) return next(new CustomError(`No doctor with id ${doctorId}`, 404));
 
-    const appointment = doctor.appointments.find(a => a._id == appointmentId);
+    const appointment = doctor.appointments.id(appointmentId);
     if (!appointment) return next(new CustomError(`No appointment with id ${appointmentId}`, 404));
 
     const query = { patientId: req.user.id, doctorId, appointmentId, date };
