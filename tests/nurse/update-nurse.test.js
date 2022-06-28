@@ -97,4 +97,19 @@ describe('PATCH /api/nurses/:id', () => {
         // Assert
         expect(res.status).toBe(400);
     });
+
+
+    test('should respond with 400 status code when trying to update the location without lat or lng', async () => {
+        // Arrange
+        const nurse = await createNurse();
+
+        // Act
+        const location = { lat: 31.42230301053233 };
+        const res = await request.patch(`/api/nurses/${nurse._id}`)
+            .set('Authorization', nurse.access)
+            .send({ location });
+
+        // Assert
+        expect(res.status).toBe(400);
+    });
 });

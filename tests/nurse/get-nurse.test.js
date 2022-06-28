@@ -152,4 +152,40 @@ describe('GET /api/nurses/:id', () => {
         // Assert
         expect(res.status).toBe(404);
     });
+
+
+    test('should return orderd list of the nearst nurses to a specfic location', async () => {
+        // Arrange
+        const location = { lat: 31.42139662201346, lng: 31.81586299955237 };
+        const patient = await createPatient();
+
+        const nursesData = [
+            { email: 'n1@dawiny.com', address: 'a1', location: { lat: 31.42230301053233, lng: 31.813052020427122 } },
+	        { email: 'n2@dawiny.com', address: 'a2', status: 'offline', location: { lat: 31.428269092248854, lng: 31.817984039666502 } },
+	        { email: 'n3@dawiny.com', address: 'a3', status: 'online' },
+	        { email: 'n5@dawiny.com', address: 'Cairo', status: 'online', location: { lat: 30.118313673851535, lng: 31.311940888357075 } },
+	        { email: 'n6@dawiny.com', address: 'Fayoum', status: 'online', location: { lat: 29.312322484322483, lng: 30.84384526287473 } },
+	        { email: 'n7@dawiny.com', address: 'Damietta', status: 'online', location: { lat: 31.443177612996678, lng: 31.658397622866737 } },
+	        { email: 'n8@dawiny.com', address: 'October', status: 'online', location: { lat: 29.94975117509209, lng: 30.896899918381223 } },
+	        { email: 'n9@dawiny.com', address: 'Alex', status: 'online', location: { lat: 31.387026615678803, lng: 30.52112230692198 } },
+	        { email: 'n10@dawiny.com', address: 'USA', status: 'online', location: { lat: 42.05521311755507, lng: -97.74822703925088 } },
+	        { email: 'n11@dawiny.com', address: 'UK', status: 'online', location: { lat: 54.828759516988924, lng: -2.456174205390504 } }
+        ]
+        nursesData.forEach(async nurseData => await createNurse({ ...data, ...nurseData }));
+
+        // Act
+        const res = await request.get(`/api/nurses?lat=${location.lat}&lng=${location.lng}`)
+            .set('Authorization', patient.access);
+
+        // Assert
+        expect(res.status).toBe(200);
+        expect(res.body.length).toBe(7);
+        expect(res.body[0].address).toEqual('Damietta');
+        expect(res.body[1].address).toEqual('Alex');
+        expect(res.body[2].address).toEqual('Cairo');
+        expect(res.body[3].address).toEqual('October');
+        expect(res.body[4].address).toEqual('Fayoum');
+        expect(res.body[5].address).toEqual('UK');
+        expect(res.body[6].address).toEqual('USA');
+    });
 });

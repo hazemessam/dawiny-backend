@@ -1,5 +1,6 @@
 // Third party modules
 const bcrypt = require('bcrypt');
+const haversineDistance = require('haversine-distance');
 
 // Application modules
 const { Nurse } = require('../models/nurse');
@@ -8,7 +9,15 @@ const { genAccessToken, genRefreshToken } = require('../services/auth/token');
 
 
 async function getAllNurses(req, res, next) {
-    const nurses = await Nurse.find();
+    let nurses = await Nurse.find();
+
+    const location = { lat: Number(req.query.lat), lng: Number(req.query.lng) };
+    if (location.lat && location.lng) {
+        nurses = nurses.filter(n => n.location && n.status == 'online');
+        nurses.forEach(n => n.distance = haversineDistance(location, n.location));
+        nurses.sort((n1, n2) => n1.distance - n2.distance);
+    }
+
     return res.json(nurses.map(n => { n.password = undefined; return n; }));
 }
 
