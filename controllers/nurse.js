@@ -16,6 +16,7 @@ async function getAllNurses(req, res, next) {
         nurses = nurses.filter(n => n.location && n.status == 'online');
         nurses.forEach(n => n.distance = haversineDistance(location, n.location));
         nurses.sort((n1, n2) => n1.distance - n2.distance);
+	    nurses = nurses.slice(0, 10);
     }
 
     return res.json(nurses.map(n => { n.password = undefined; return n; }));
