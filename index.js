@@ -1,12 +1,19 @@
 // Third party modules
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cloudinary = require('cloudinary').v2;
 
 // Application modules
 const app = require('./app');
 
 
 dotenv.config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const PORT = process.env.PORT || 8080;
 const DB_URI = process.env.DB_URI;
