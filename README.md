@@ -11,7 +11,7 @@ Dawiny is a healthcare mobile app that connects patients, doctors, and nurses wi
 - [Express](https://expressjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [MongoDB](https://www.mongodb.com/)
-- [Socket.IO](https://socket.io/)
+- [Jest](https://jestjs.io/)
 - [Docker](https://www.docker.com/)
 - [Heroku](https://www.heroku.com/)
 
@@ -31,7 +31,7 @@ $ cd dawiny-backend/
 $ npm install
 ```
 
-#### 4. Set the environment variable `DB_URI` to your database uri
+#### 4. Set the environment variables `DB_URI`, `ACCESS_SECRET`, `REFRESH_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`.
 
 #### 5. Run the server
 ```bash
