@@ -1,10 +1,20 @@
 # Dawiny Backend
-Dawiny is a healthcare mobile app that connects patients, doctors, and nurses with each other.
+Dawiny is a healthcare mobile app connects patients, doctors, and nurses with each other.
 
 ## Table of Content
+- [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Server Setup](#server-setup)
 - [API Endpoints](#api-endpoints)
+
+## Features
+- CRUD operations on patients, doctors and nurses.
+- Register and login users.
+- Authentication and authorization services.
+- Patient can find the nearest 10 nurses to his location.
+- Patient can book an appointment with a doctor.
+- File upload service.
+- CI/CD pipeline using GitHub Actions.
 
 ## Tech Stack
 - [Node.js](https://nodejs.org/en/)
@@ -43,18 +53,25 @@ $ npm start
 ## API Endpoints
 | Method | Endpoint | Description |
 | - | - | - |
-| GET | /api/patients/:id | Get a patient by its id
-| POST | /api/patients | Create a new patient |
-| PATCH | /api/patients/:id | Update a patient by its id |
-| DELETE | /api/patients/:id | Delete a patient by its id |
-| GET | /api/doctors | Get all doctors |
-| GET | /api/doctors/:id | Get a doctor by its id
-| POST | /api/doctors | Create a new doctor |
-| PATCH | /api/doctors/:id | Update a doctor by its id |
-| DELETE | /api/doctors/:id | Delete a doctor by its id |
-| GET | /api/nurses | Get all nurses |
-| GET | /api/nurses/:id | Get a nurse by its id
-| POST | /api/nurses | Create a new nurse |
-| PATCH | /api/nurses/:id | Update a nurse by its id |
-| DELETE | /api/nurses/:id | Delete a nurse by its id |
-
+| GET | /api/patients/:id | Get a patient by its id. |
+| POST | /api/patients | Create a new patient. |
+| PATCH | /api/patients/:id | Update a patient by its id. |
+| DELETE | /api/patients/:id | Delete a patient by its id. |
+| GET | /api/patients/:id/reservations | Get a patient reservations using its id. |
+| GET | /api/doctors | Get all doctors. |
+| GET | /api/doctors/:id | Get a doctor by its id. |
+| POST | /api/doctors | Create a new doctor. |
+| PATCH | /api/doctors/:id | Update a doctor by its id. |
+| DELETE | /api/doctors/:id | Delete a doctor by its id. |
+| GET | /api/doctors/:id/reservations | Get a doctor reservations using its id. |
+| POST | /api/doctors/:id/reservations | Book an appointment with a doctor using its id. |
+| POST | /api/doctors/:id/reservations?check=true | Check if a doctor appointment is available or not. |
+| GET | /api/nurses | Get all nurses. |
+| GET | /api/nurses?lat=:lat&lng=:lng | Get the nearest 10 nurses to the specified location. |
+| GET | /api/nurses/:id | Get a nurse by its id. |
+| POST | /api/nurses | Create a new nurse. |
+| PATCH | /api/nurses/:id | Update a nurse by its id. |
+| DELETE | /api/nurses/:id | Delete a nurse by its id. |
+| POST | /api/auth/login | Login a user. |
+| POST | /api/auth/token | Generate a new access token using the refresh token. |
+| POST | /api/upload | Upload a file. |
