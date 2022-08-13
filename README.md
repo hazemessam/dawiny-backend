@@ -67,7 +67,7 @@ $ npm start
 | POST | /api/doctors/:id/reservations | Book an appointment with a doctor using its id. |
 | POST | /api/doctors/:id/reservations?check=true | Check if a doctor appointment is available or not. |
 | GET | /api/nurses | Get all nurses. |
-| GET | /api/nurses?lat=:lat&lng=:lng | Get the nearest 10 nurses to the specified location. |
+| GET | /api/nurses?lat=:lat&lng=:lng | Get the top 10 nearest nurses to the specified location. |
 | GET | /api/nurses/:id | Get a nurse by its id. |
 | POST | /api/nurses | Create a new nurse. |
 | PATCH | /api/nurses/:id | Update a nurse by its id. |
