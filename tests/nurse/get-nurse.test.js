@@ -82,13 +82,13 @@ describe('GET /api/nurses', () => {
     });
 
 
-    test('should return ordered list of the nearst nurses to a specfic location', async () => {
+    test('should return an ordered list of the top 10 nearst nurses to the specified location', async () => {
         // Arrange
         const location = { lat: 31.42139662201346, lng: 31.81586299955237 };
         const patient = await createPatient();
 
         const nursesData = [
-            { email: 'n1@dawiny.com', address: 'a1', location: { lat: 31.42230301053233, lng: 31.813052020427122 } },
+            	{ email: 'n1@dawiny.com', address: 'a1', location: { lat: 31.42230301053233, lng: 31.813052020427122 } },
 	        { email: 'n2@dawiny.com', address: 'a2', status: 'offline', location: { lat: 31.428269092248854, lng: 31.817984039666502 } },
 	        { email: 'n3@dawiny.com', address: 'a3', status: 'online' },
 	        { email: 'n5@dawiny.com', address: 'Cairo', status: 'online', location: { lat: 30.118313673851535, lng: 31.311940888357075 } },
@@ -107,7 +107,6 @@ describe('GET /api/nurses', () => {
 
         // Assert
         expect(res.status).toBe(200);
-        expect(res.body.length).toBe(7);
         expect(res.body[0].address).toEqual('Damietta');
         expect(res.body[1].address).toEqual('Alex');
         expect(res.body[2].address).toEqual('Cairo');
