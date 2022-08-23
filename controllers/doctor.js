@@ -70,8 +70,7 @@ async function deleteDoctorById(req, res, next) {
 async function checkAppointment(req, res, next) {
     const appointmentId = req.body.appointmentId;
     const date = req.body.date;
-    if (!appointmentId || !date)
-    return next(new CustomError('Missing appointmentId or date', 400));
+    if (!appointmentId || !date) return next(new CustomError('Missing appointmentId or date', 400));
 
     const doctorId = req.params.id;
     const doctor = await Doctor.findById(doctorId);
