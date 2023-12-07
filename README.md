@@ -41,7 +41,13 @@ $ cd dawiny-backend/
 $ npm install
 ```
 
-#### 4. Set the environment variables `DB_URI`, `ACCESS_SECRET`, `REFRESH_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`.
+#### 4. Set the following environment variables 
+- `DB_URI`,
+- `ACCESS_SECRET`,
+- `REFRESH_SECRET`,
+- `CLOUDINARY_CLOUD_NAME`,
+- `CLOUDINARY_API_KEY`,
+- `CLOUDINARY_API_SECRET`
 
 #### 5. Run the server
 ```bash
